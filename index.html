@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>calc</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .cal {
+        width: 430px;
+        display: flex;
+        flex-direction: column;
+        padding: 50px;
+      }
+      .flex {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+      }
+      .btn {
+        width: 60px;
+        height: 60px;
+        border-radius: 20px;
+        background: linear-gradient(145deg, #cacaca, #f0f0f0);
+        box-shadow: 15px 15px 30px #a8a8a8, -15px -15px 30px #ffffff;
+        position: relative;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+      }
+      .btn span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 35px;
+        font-weight: 600;
+      }
+      .c_disp {
+        width: 310px;
+        height: 70px;
+        border-radius: 20px;
+        background: linear-gradient(145deg, #cacaca, #f0f0f0);
+        box-shadow: 15px 15px 30px #a8a8a8, -15px -15px 30px #ffffff;
+        position: relative;
+        margin: 10px;
+        overflow-y: hidden;
+      }
+      .c_disp span {
+        position: absolute;
+        top: 10px;
+        right: 5%;
+        font-size: 40px;
+        font-weight: 900;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cal">
+      <div>
+        <div class="c_disp"><span id="display"></span></div>
+        <div class="c_disp"><span id="display1"></span></div>
+      </div>
+      <div class="flex">
+        <button class="btn" onclick="clk('1')"><span>1</span></button>
+        <button class="btn" onclick="clk('2')"><span>2</span></button>
+        <button class="btn" onclick="clk('3')"><span>3</span></button>
+        <button class="btn" onclick="back()"><span><</span></button>
+      </div>
+      <div class="flex">
+        <button class="btn" onclick="clk('4')"><span>4</span></button>
+        <button class="btn" onclick="clk('5')"><span>5</span></button>
+        <button class="btn" onclick="clk('6')"><span>6</span></button>
+        <button class="btn" onclick="clk('+')"><span>+</span></button>
+      </div>
+      <div class="flex">
+        <button class="btn" onclick="clk('7')"><span>7</span></button>
+        <button class="btn" onclick="clk('8')"><span>8</span></button>
+        <button class="btn" onclick="clk('9')"><span>9</span></button>
+        <button class="btn" onclick="clk('-')"><span>-</span></button>
+      </div>
+      <div class="flex">
+        <button class="btn" onclick="clk('.')"><span>.</span></button>
+        <button class="btn" onclick="clk('0')"><span>0</span></button>
+        <button class="btn" onclick="clk('00')"><span>00</span></button>
+        <button class="btn" onclick="clk('*')"><span>x</span></button>
+      </div>
+      <div class="flex">
+        <button class="btn" onclick="clearall()"><span>C</span></button>
+        <button class="btn" onclick=""><span></span></button>
+        <button class="btn" onclick="total()"><span>=</span></button>
+        <button class="btn" onclick="clk('/')"><span>/</span></button>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  var sum = 0;
+  var temp_sum = 0;
+  var calculation;
+  var answer = 0;
+  var flag;
+
+  function clk(value) {
+    document.getElementById("display").innerHTML += value;
+    disp();
+    flag = 0;
+  }
+  function clk1(value) {
+    console.log(flag);
+    if (flag == 0) {
+      document.getElementById("display").innerHTML += value;
+      flag = 1;
+      disp();
+
+      // console.log(flag);
+    } else {
+      let lastVal = document.getElementById("display").innerHTML;
+      // console.log(lastVal);
+      let newVal = lastVal.substr(0, lastVal.length - 1) + value;
+      document.getElementById("display").innerHTML = newVal;
+      flag = 1;
+      disp();
+    }
+  }
+
+  function disp() {
+    var result = eval(document.getElementById("display").innerHTML);
+    if (result === undefined) {
+      document.getElementById("display1").innerHTML = "";
+    } else {
+      document.getElementById("display1").innerHTML = result;
+    }
+  }
+
+  function clearall() {
+    // console.log("hii");
+    document.getElementById("display").innerHTML = 0;
+    document.getElementById("display1").innerHTML = 0;
+  }
+
+  function total() {
+    // console.log("hiii");
+    var result = eval(document.getElementById("display").innerHTML);
+    document.getElementById("display").innerHTML = result;
+    // console.log(result);
+  }
+  function back() {
+    let lastVal = document.getElementById("display").innerHTML;
+    // console.log(lastVal);
+    let newVal = lastVal.substr(0, lastVal.length - 1);
+    document.getElementById("display").innerHTML = newVal;
+
+    disp();
+  }
+</script>
