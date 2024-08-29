@@ -67,6 +67,12 @@
   </head>
   <body>
     <div class="cal">
+      <input
+        type="text"
+        id="hiddenInput"
+        style="opacity: 0; position: absolute; pointer-events: none"
+      />
+
       <div>
         <div class="c_disp"><span id="display"></span></div>
         <div class="c_disp"><span id="display1"></span></div>
@@ -81,25 +87,25 @@
         <button class="btn" onclick="clk('4')"><span>4</span></button>
         <button class="btn" onclick="clk('5')"><span>5</span></button>
         <button class="btn" onclick="clk('6')"><span>6</span></button>
-        <button class="btn" onclick="clk('+')"><span>+</span></button>
+        <button class="btn" onclick="clk1('+')"><span>+</span></button>
       </div>
       <div class="flex">
         <button class="btn" onclick="clk('7')"><span>7</span></button>
         <button class="btn" onclick="clk('8')"><span>8</span></button>
         <button class="btn" onclick="clk('9')"><span>9</span></button>
-        <button class="btn" onclick="clk('-')"><span>-</span></button>
+        <button class="btn" onclick="clk1('-')"><span>-</span></button>
       </div>
       <div class="flex">
         <button class="btn" onclick="clk('.')"><span>.</span></button>
         <button class="btn" onclick="clk('0')"><span>0</span></button>
         <button class="btn" onclick="clk('00')"><span>00</span></button>
-        <button class="btn" onclick="clk('*')"><span>x</span></button>
+        <button class="btn" onclick="clk1('*')"><span>x</span></button>
       </div>
       <div class="flex">
         <button class="btn" onclick="clearall()"><span>C</span></button>
         <button class="btn" onclick=""><span></span></button>
         <button class="btn" onclick="total()"><span>=</span></button>
-        <button class="btn" onclick="clk('/')"><span>/</span></button>
+        <button class="btn" onclick="clk1('/')"><span>/</span></button>
       </div>
     </div>
   </body>
@@ -111,27 +117,82 @@
   var answer = 0;
   var flag;
 
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      total();
+    }
+    if (e.key === "Backspace") {
+      back();
+    }
+    if (e.key === "Delete") {
+      clearall();
+    }
+    if (e.key === "1") {
+      clk("1");
+    }
+    if (e.key === "2") {
+      clk("2");
+    }
+    if (e.key === "3") {
+      clk("3");
+    }
+    if (e.key === "4") {
+      clk("4");
+    }
+    if (e.key === "5") {
+      clk("5");
+    }
+    if (e.key === "6") {
+      clk("6");
+    }
+    if (e.key === "7") {
+      clk("7");
+    }
+    if (e.key === "8") {
+      clk("8");
+    }
+    if (e.key === "9") {
+      clk("9");
+    }
+    if (e.key === "0") {
+      clk("0");
+    }
+    if (e.key === ".") {
+      clk(".");
+    }
+    if (e.key === "+") {
+      clk1("+");
+    }
+    if (e.key === "-") {
+      clk1("-");
+    }
+    if (e.key === "*") {
+      clk1("*");
+    }
+    if (e.key === "/") {
+      clk1("/");
+    }
+  });
+
   function clk(value) {
     document.getElementById("display").innerHTML += value;
+    document.getElementById("hiddenInput").focus();
     disp();
     flag = 0;
   }
   function clk1(value) {
-    console.log(flag);
     if (flag == 0) {
       document.getElementById("display").innerHTML += value;
       flag = 1;
       disp();
-
-      // console.log(flag);
     } else {
       let lastVal = document.getElementById("display").innerHTML;
-      // console.log(lastVal);
       let newVal = lastVal.substr(0, lastVal.length - 1) + value;
       document.getElementById("display").innerHTML = newVal;
       flag = 1;
       disp();
     }
+    document.getElementById("hiddenInput").focus();
   }
 
   function disp() {
@@ -144,20 +205,16 @@
   }
 
   function clearall() {
-    // console.log("hii");
-    document.getElementById("display").innerHTML = 0;
-    document.getElementById("display1").innerHTML = 0;
+    document.getElementById("display").innerHTML = "";
+    document.getElementById("display1").innerHTML = "";
   }
 
   function total() {
-    // console.log("hiii");
     var result = eval(document.getElementById("display").innerHTML);
     document.getElementById("display").innerHTML = result;
-    // console.log(result);
   }
   function back() {
     let lastVal = document.getElementById("display").innerHTML;
-    // console.log(lastVal);
     let newVal = lastVal.substr(0, lastVal.length - 1);
     document.getElementById("display").innerHTML = newVal;
 
